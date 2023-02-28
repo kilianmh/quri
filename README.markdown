@@ -55,11 +55,11 @@ Behaviour that deviates from it should be considered a bug; please report.
 
 ## Functions
 
-### \[Function] uri
+### \[Function] uri `(data &key (start 0) end)`
 
 Parse a string or a byte vector and return a `uri` object.
 
-### \[Function] make-uri
+### \[Function] make-uri `(&rest initargs &key scheme userinfo host port path query fragment defaults)`
 
 Create a `uri` object.
 
@@ -74,13 +74,14 @@ Create a `uri` object.
 ;=> #<QURI.URI.HTTP:URI-HTTP http://8arrow.org?guest=1>
 ```
 
-### \[Function] copy-uri
+### \[Function] copy-uri `(uri &key (scheme (uri-scheme uri)) (userinfo (uri-userinfo uri)) (host (uri-host uri)) (port (uri-port uri)) (path (uri-path uri)) (query (uri-query uri)) (fragment (uri-fragment uri)))`
 
 Return a copy of the given `uri` object.
 
-### \[Function] merge-uris
+### \[Function] merge-uris `(reference base)`
 
 Merge a reference URI into the base URI as described in RFC 2396 Section 5.2. The returned URI may or may not be a new instance. Neither REFERENCE nor BASE is mutated.
+
 
 ### \[Structure] uri
 
