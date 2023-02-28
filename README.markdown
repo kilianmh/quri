@@ -59,6 +59,15 @@ Behaviour that deviates from it should be considered a bug; please report.
 
 Parse a string or a byte vector and return a `uri` object.
 
+```common-lisp
+(uri "http://8arrow.org/")
+;=> #<URI-HTTP http://8arrow.org/>
+
+(uri "https://8arrow.org?guest=McCarthy"
+     :end 30)
+;=> #<URI-HTTPS https://8arrow.org?guest=McCar>
+```
+
 ### \[Function] make-uri `(&rest initargs &key scheme userinfo host port path query fragment defaults)`
 
 Create a `uri` object.
@@ -78,9 +87,33 @@ Create a `uri` object.
 
 Return a copy of the given `uri` object.
 
+```common-lisp
+(copy-uri (uri "http://8arrow.org?guest=McCarthy"))
+;=> #<URI-HTTP http://8arrow.org?guest=McCarthy>
+
+(copy-uri (make-uri :defaults "http://8arrow.org"
+                    :query '(("guest" . 1)))
+          :path "test")
+;=> #<URI-HTTP http://8arrow.org/test?guest=1>
+
+(copy-uri (uri "http://8arrow.org?guest=McCarthy")
+          :host "7arrow.com")
+;=> #<URI-HTTP http://7arrow.com?guest=McCarthy>
+```
+
 ### \[Function] merge-uris `(reference base)`
 
 Merge a reference URI into the base URI as described in RFC 2396 Section 5.2. The returned URI may or may not be a new instance. Neither REFERENCE nor BASE is mutated.
+
+```common-lisp
+(merge-uris (uri "/new/path")
+            "http://www.example.com/path/a/b.html")
+;=> #<URI-HTTP http://www.example.com/new/path>
+
+(merge-uris (make-uri :query "name=fukamachi")
+            "http://www.example.com/path/a/b.html")
+;=> #<URI-HTTP http://www.example.com/path/a/b.html?name=fukamachi>
+```
 
 ### \[Function] render-uri `(uri &optional stream)`
 
