@@ -82,6 +82,24 @@ Return a copy of the given `uri` object.
 
 Merge a reference URI into the base URI as described in RFC 2396 Section 5.2. The returned URI may or may not be a new instance. Neither REFERENCE nor BASE is mutated.
 
+### \[Function] render-uri `(uri &optional stream)`
+
+Render an `uri` object and either return it as string or write it to a given stream.
+
+```common-lisp
+(render-uri
+  (make-uri :scheme "http"
+            :host "8arrow.org"
+            :path "/"))
+;=> "http://8arrow.org/"
+
+(render-uri
+  (make-uri :defaults "http://8arrow.org"
+            :query '(("guest" . 1)))
+  *standard-output*)
+;=> http://8arrow.org?guest=1
+    NIL
+```
 
 ### \[Structure] uri
 
